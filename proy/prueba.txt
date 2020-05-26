@@ -1,2 +1,3 @@
-int a;
-
+ent a;
+real b;
+car x[2];

@@ -601,10 +601,10 @@ state 50
 	sentenc : SI . e_bool ENTC sentenc FIN  (25)
 	sentenc : SI . e_bool ENTC sentenc SINO sentenc FIN  (26)
 
-	PARI  shift 64
-	NOT  shift 65
-	VERDAD  shift 66
-	FALSO  shift 67
+	VERDAD  shift 64
+	FALSO  shift 65
+	NOT  shift 66
+	PARI  shift 67
 	ID  shift 68
 	NUM  shift 69
 	CARACT  shift 70
@@ -622,10 +622,10 @@ state 50
 state 51
 	sentenc : MIENT . e_bool HACER sentenc FIN  (27)
 
-	PARI  shift 64
-	NOT  shift 65
-	VERDAD  shift 66
-	FALSO  shift 67
+	VERDAD  shift 64
+	FALSO  shift 65
+	NOT  shift 66
+	PARI  shift 67
 	ID  shift 68
 	NUM  shift 69
 	CARACT  shift 70
@@ -726,9 +726,9 @@ state 58
 
 	CORI  shift 85
 	PYC  reduce 72
-	PARD  reduce 72
 	DPI  reduce 72
 	PT  reduce 72
+	PARD  reduce 72
 
 
 state 59
@@ -751,14 +751,16 @@ state 61
 
 	PT  shift 88
 	PYC  reduce 69
-	PARD  reduce 69
-	CORD  reduce 69
 	COMA  reduce 69
 	DPI  reduce 69
 	PRC  reduce 69
 	ENTC  reduce 69
 	HACER  reduce 69
+	MAS  reduce 69
+	MNS  reduce 69
 	OR  reduce 69
+	MUL  reduce 69
+	DIV  reduce 69
 	AND  reduce 69
 	MAY  reduce 69
 	MAYI  reduce 69
@@ -766,10 +768,8 @@ state 61
 	MENI  reduce 69
 	DIF  reduce 69
 	IGUAL  reduce 69
-	MAS  reduce 69
-	MNS  reduce 69
-	MUL  reduce 69
-	DIV  reduce 69
+	PARD  reduce 69
+	CORD  reduce 69
 
 
 state 62
@@ -778,14 +778,16 @@ state 62
 
 	CORI  shift 89
 	PYC  reduce 70
-	PARD  reduce 70
-	CORD  reduce 70
 	COMA  reduce 70
 	DPI  reduce 70
 	PRC  reduce 70
 	ENTC  reduce 70
 	HACER  reduce 70
+	MAS  reduce 70
+	MNS  reduce 70
 	OR  reduce 70
+	MUL  reduce 70
+	DIV  reduce 70
 	AND  reduce 70
 	MAY  reduce 70
 	MAYI  reduce 70
@@ -793,10 +795,8 @@ state 62
 	MENI  reduce 70
 	DIF  reduce 70
 	IGUAL  reduce 70
-	MAS  reduce 70
-	MNS  reduce 70
-	MUL  reduce 70
-	DIV  reduce 70
+	PARD  reduce 70
+	CORD  reduce 70
 
 
 state 63
@@ -807,13 +807,24 @@ state 63
 
 
 state 64
-	e_bool : PARI . e_bool PARD  (44)
-	expr : PARI . expr PARD  (58)
+	e_bool : VERDAD .  (46)
 
-	PARI  shift 64
-	NOT  shift 65
-	VERDAD  shift 66
-	FALSO  shift 67
+	.  reduce 46
+
+
+state 65
+	e_bool : FALSO .  (47)
+
+	.  reduce 47
+
+
+state 66
+	e_bool : NOT . e_bool  (43)
+
+	VERDAD  shift 64
+	FALSO  shift 65
+	NOT  shift 66
+	PARI  shift 67
 	ID  shift 68
 	NUM  shift 69
 	CARACT  shift 70
@@ -822,53 +833,44 @@ state 64
 
 	e_bool  goto 91
 	var  goto 73
-	expr  goto 92
-	relac  goto 75
-	dato_est_sim  goto 61
-	arreglo  goto 62
-
-
-state 65
-	e_bool : NOT . e_bool  (43)
-
-	PARI  shift 64
-	NOT  shift 65
-	VERDAD  shift 66
-	FALSO  shift 67
-	ID  shift 68
-	NUM  shift 69
-	CARACT  shift 70
-	CAD  shift 71
-	.  error
-
-	e_bool  goto 93
-	var  goto 73
 	expr  goto 74
 	relac  goto 75
 	dato_est_sim  goto 61
 	arreglo  goto 62
 
 
-state 66
-	e_bool : VERDAD .  (46)
-
-	.  reduce 46
-
-
 state 67
-	e_bool : FALSO .  (47)
+	e_bool : PARI . e_bool PARD  (44)
+	expr : PARI . expr PARD  (58)
 
-	.  reduce 47
+	VERDAD  shift 64
+	FALSO  shift 65
+	NOT  shift 66
+	PARI  shift 67
+	ID  shift 68
+	NUM  shift 69
+	CARACT  shift 70
+	CAD  shift 71
+	.  error
+
+	e_bool  goto 92
+	var  goto 73
+	expr  goto 93
+	relac  goto 75
+	dato_est_sim  goto 61
+	arreglo  goto 62
 
 
 68: reduce/reduce conflict (reduce 59, reduce 72) on PYC
-68: reduce/reduce conflict (reduce 59, reduce 72) on PARD
-68: reduce/reduce conflict (reduce 59, reduce 72) on CORD
 68: reduce/reduce conflict (reduce 59, reduce 72) on COMA
 68: reduce/reduce conflict (reduce 59, reduce 72) on PRC
 68: reduce/reduce conflict (reduce 59, reduce 72) on ENTC
 68: reduce/reduce conflict (reduce 59, reduce 72) on HACER
+68: reduce/reduce conflict (reduce 59, reduce 72) on MAS
+68: reduce/reduce conflict (reduce 59, reduce 72) on MNS
 68: reduce/reduce conflict (reduce 59, reduce 72) on OR
+68: reduce/reduce conflict (reduce 59, reduce 72) on MUL
+68: reduce/reduce conflict (reduce 59, reduce 72) on DIV
 68: reduce/reduce conflict (reduce 59, reduce 72) on AND
 68: reduce/reduce conflict (reduce 59, reduce 72) on MAY
 68: reduce/reduce conflict (reduce 59, reduce 72) on MAYI
@@ -876,10 +878,8 @@ state 67
 68: reduce/reduce conflict (reduce 59, reduce 72) on MENI
 68: reduce/reduce conflict (reduce 59, reduce 72) on DIF
 68: reduce/reduce conflict (reduce 59, reduce 72) on IGUAL
-68: reduce/reduce conflict (reduce 59, reduce 72) on MAS
-68: reduce/reduce conflict (reduce 59, reduce 72) on MNS
-68: reduce/reduce conflict (reduce 59, reduce 72) on MUL
-68: reduce/reduce conflict (reduce 59, reduce 72) on DIV
+68: reduce/reduce conflict (reduce 59, reduce 72) on PARD
+68: reduce/reduce conflict (reduce 59, reduce 72) on CORD
 state 68
 	expr : ID .  (59)
 	expr : ID . PARI param PARD  (64)
@@ -889,14 +889,16 @@ state 68
 	PARI  shift 94
 	CORI  shift 85
 	PYC  reduce 59
-	PARD  reduce 59
-	CORD  reduce 59
 	COMA  reduce 59
 	PRC  reduce 59
 	PT  reduce 72
 	ENTC  reduce 59
 	HACER  reduce 59
+	MAS  reduce 59
+	MNS  reduce 59
 	OR  reduce 59
+	MUL  reduce 59
+	DIV  reduce 59
 	AND  reduce 59
 	MAY  reduce 59
 	MAYI  reduce 59
@@ -904,10 +906,8 @@ state 68
 	MENI  reduce 59
 	DIF  reduce 59
 	IGUAL  reduce 59
-	MAS  reduce 59
-	MNS  reduce 59
-	MUL  reduce 59
-	DIV  reduce 59
+	PARD  reduce 59
+	CORD  reduce 59
 
 
 state 69
@@ -957,7 +957,6 @@ state 74
 	MUL  shift 101
 	DIV  shift 102
 	PYC  reduce 49
-	PARD  reduce 49
 	ENTC  reduce 49
 	HACER  reduce 49
 	OR  reduce 49
@@ -968,6 +967,7 @@ state 74
 	MENI  reduce 49
 	DIF  reduce 49
 	IGUAL  reduce 49
+	PARD  reduce 49
 
 	op_arit  goto 103
 
@@ -983,11 +983,11 @@ state 75
 	DIF  shift 108
 	IGUAL  shift 109
 	PYC  reduce 45
-	PARD  reduce 45
 	ENTC  reduce 45
 	HACER  reduce 45
 	OR  reduce 45
 	AND  reduce 45
+	PARD  reduce 45
 
 	op_rel  goto 110
 
@@ -1162,27 +1162,35 @@ state 90
 state 91
 	e_bool : e_bool . OR e_bool  (41)
 	e_bool : e_bool . AND e_bool  (42)
+	e_bool : NOT e_bool .  (43)
+
+	.  reduce 43
+
+
+state 92
+	e_bool : e_bool . OR e_bool  (41)
+	e_bool : e_bool . AND e_bool  (42)
 	e_bool : PARI e_bool . PARD  (44)
 
-	PARD  shift 123
 	OR  shift 96
 	AND  shift 97
+	PARD  shift 123
 	.  error
 
 
-92: shift/reduce conflict (shift 124, reduce 49) on PARD
-state 92
+93: shift/reduce conflict (shift 124, reduce 49) on PARD
+state 93
 	relac : expr .  (49)
 	expr : expr . op_arit expr  (56)
 	expr : expr . PRC expr  (57)
 	expr : PARI expr . PARD  (58)
 
-	PARD  shift 124
 	PRC  shift 98
 	MAS  shift 99
 	MNS  shift 100
 	MUL  shift 101
 	DIV  shift 102
+	PARD  shift 124
 	OR  reduce 49
 	AND  reduce 49
 	MAY  reduce 49
@@ -1193,21 +1201,6 @@ state 92
 	IGUAL  reduce 49
 
 	op_arit  goto 103
-
-
-93: shift/reduce conflict (shift 96, reduce 43) on OR
-93: shift/reduce conflict (shift 97, reduce 43) on AND
-state 93
-	e_bool : e_bool . OR e_bool  (41)
-	e_bool : e_bool . AND e_bool  (42)
-	e_bool : NOT e_bool .  (43)
-
-	OR  shift 96
-	AND  shift 97
-	PYC  reduce 43
-	PARD  reduce 43
-	ENTC  reduce 43
-	HACER  reduce 43
 
 
 state 94
@@ -1254,10 +1247,10 @@ state 95
 state 96
 	e_bool : e_bool OR . e_bool  (41)
 
-	PARI  shift 64
-	NOT  shift 65
-	VERDAD  shift 66
-	FALSO  shift 67
+	VERDAD  shift 64
+	FALSO  shift 65
+	NOT  shift 66
+	PARI  shift 67
 	ID  shift 68
 	NUM  shift 69
 	CARACT  shift 70
@@ -1275,10 +1268,10 @@ state 96
 state 97
 	e_bool : e_bool AND . e_bool  (42)
 
-	PARI  shift 64
-	NOT  shift 65
-	VERDAD  shift 66
-	FALSO  shift 67
+	VERDAD  shift 64
+	FALSO  shift 65
+	NOT  shift 66
+	PARI  shift 67
 	ID  shift 68
 	NUM  shift 69
 	CARACT  shift 70
@@ -1426,10 +1419,10 @@ state 111
 state 112
 	sentenc : HACER sentenc MIENT . e_bool PYC  (28)
 
-	PARI  shift 64
-	NOT  shift 65
-	VERDAD  shift 66
-	FALSO  shift 67
+	VERDAD  shift 64
+	FALSO  shift 65
+	NOT  shift 66
+	PARI  shift 67
 	ID  shift 68
 	NUM  shift 69
 	CARACT  shift 70
@@ -1456,12 +1449,12 @@ state 114
 	expr : expr . PRC expr  (57)
 	expr : PARI expr . PARD  (58)
 
-	PARD  shift 124
 	PRC  shift 98
 	MAS  shift 99
 	MNS  shift 100
 	MUL  shift 101
 	DIV  shift 102
+	PARD  shift 124
 	.  error
 
 	op_arit  goto 103
@@ -1490,12 +1483,12 @@ state 118
 	expr : expr . PRC expr  (57)
 	arreglo : ID CORI expr . CORD  (73)
 
-	CORD  shift 137
 	PRC  shift 98
 	MAS  shift 99
 	MNS  shift 100
 	MUL  shift 101
 	DIV  shift 102
+	CORD  shift 137
 	.  error
 
 	op_arit  goto 103
@@ -1534,12 +1527,12 @@ state 122
 	expr : expr . PRC expr  (57)
 	arreglo : arreglo CORI expr . CORD  (74)
 
-	CORD  shift 139
 	PRC  shift 98
 	MAS  shift 99
 	MNS  shift 100
 	MUL  shift 101
 	DIV  shift 102
+	CORD  shift 139
 	.  error
 
 	op_arit  goto 103
@@ -1567,8 +1560,8 @@ state 125
 	MNS  shift 100
 	MUL  shift 101
 	DIV  shift 102
-	PARD  reduce 78
 	COMA  reduce 78
+	PARD  reduce 78
 
 	op_arit  goto 103
 
@@ -1597,34 +1590,25 @@ state 128
 	.  error
 
 
-129: shift/reduce conflict (shift 96, reduce 41) on OR
-129: shift/reduce conflict (shift 97, reduce 41) on AND
 state 129
 	e_bool : e_bool . OR e_bool  (41)
 	e_bool : e_bool OR e_bool .  (41)
 	e_bool : e_bool . AND e_bool  (42)
 
-	OR  shift 96
 	AND  shift 97
 	PYC  reduce 41
-	PARD  reduce 41
 	ENTC  reduce 41
 	HACER  reduce 41
+	OR  reduce 41
+	PARD  reduce 41
 
 
-130: shift/reduce conflict (shift 96, reduce 42) on OR
-130: shift/reduce conflict (shift 97, reduce 42) on AND
 state 130
 	e_bool : e_bool . OR e_bool  (41)
 	e_bool : e_bool . AND e_bool  (42)
 	e_bool : e_bool AND e_bool .  (42)
 
-	OR  shift 96
-	AND  shift 97
-	PYC  reduce 42
-	PARD  reduce 42
-	ENTC  reduce 42
-	HACER  reduce 42
+	.  reduce 42
 
 
 131: shift/reduce conflict (shift 98, reduce 57) on PRC
@@ -1643,8 +1627,6 @@ state 131
 	MUL  shift 101
 	DIV  shift 102
 	PYC  reduce 57
-	PARD  reduce 57
-	CORD  reduce 57
 	COMA  reduce 57
 	ENTC  reduce 57
 	HACER  reduce 57
@@ -1656,6 +1638,8 @@ state 131
 	MENI  reduce 57
 	DIF  reduce 57
 	IGUAL  reduce 57
+	PARD  reduce 57
+	CORD  reduce 57
 
 	op_arit  goto 103
 
@@ -1676,8 +1660,6 @@ state 132
 	MUL  shift 101
 	DIV  shift 102
 	PYC  reduce 56
-	PARD  reduce 56
-	CORD  reduce 56
 	COMA  reduce 56
 	ENTC  reduce 56
 	HACER  reduce 56
@@ -1689,6 +1671,8 @@ state 132
 	MENI  reduce 56
 	DIF  reduce 56
 	IGUAL  reduce 56
+	PARD  reduce 56
+	CORD  reduce 56
 
 	op_arit  goto 103
 
@@ -1710,11 +1694,11 @@ state 133
 	DIF  shift 108
 	IGUAL  shift 109
 	PYC  reduce 48
-	PARD  reduce 48
 	ENTC  reduce 48
 	HACER  reduce 48
 	OR  reduce 48
 	AND  reduce 48
+	PARD  reduce 48
 
 	op_rel  goto 110
 
@@ -1842,8 +1826,8 @@ state 147
 	MNS  shift 100
 	MUL  shift 101
 	DIV  shift 102
-	PARD  reduce 77
 	COMA  reduce 77
+	PARD  reduce 77
 
 	op_arit  goto 103
 
@@ -1974,10 +1958,7 @@ state 160
 
 
 State 68 contains 19 reduce/reduce conflicts.
-State 92 contains 1 shift/reduce conflict.
-State 93 contains 2 shift/reduce conflicts.
-State 129 contains 2 shift/reduce conflicts.
-State 130 contains 2 shift/reduce conflicts.
+State 93 contains 1 shift/reduce conflict.
 State 131 contains 5 shift/reduce conflicts.
 State 132 contains 5 shift/reduce conflicts.
 State 133 contains 6 shift/reduce conflicts.

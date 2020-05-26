@@ -14,14 +14,41 @@ cad \"(({simb}|{esp})*)\"
 caract \'{simb}\'
 
 %%
-{id} {	
- if(yyleng>32){
- printf("Error lexico %s excede la longitud permitida\n",yytext);
- return -1;
- }
- strcpy(yylval.id,yytext);
- return ID;
-}
+
+"sin" {yylval.tipo = 0;
+	printf("Sin tipo\n");
+	return SIN;}
+"ent" {yylval.tipo = 1;
+	printf("Tipo ent\n");
+	return INT;}
+"real" {yylval.tipo = 2;
+	printf("Tipo real\n");
+	return FLOAT;}
+"car" {yylval.tipo = 3;
+	printf("Tipo car\n");
+	return CAR;}
+
+"estructura" {return ESTRUCT;}
+"inicio" {return INICIO;}
+"fin" {return FIN;}
+"def" {return DEF;}
+"si" {return SI;}
+"entonces" {return ENTC;}
+"sino" {return SINO;}
+"mientras" {return MIENT;}
+"hacer" {return HACER;}
+"segun" {return SEGUN;}
+"caso" {return CASO;}
+"leer" {return LEER;}
+"escribir" {return ESCRIBE;}
+"devolver" {return DEVOL;}
+"terminar" {return TERMI;}
+"pred" {return PRED;}
+
+
+"verdadero" {return VERDAD;}
+"falso" {return FALSO;}
+
 {num} {	
  yylval.num = atof(yytext);
  return NUM;
@@ -43,31 +70,14 @@ caract \'{simb}\'
  return CAD;
 }
 
-"void" {yylval.tipo = 0;
-	return SIN;}
-"int" {yylval.tipo = 1;
-	return INT;}
-"float" {yylval.tipo = 2;
-	return FLOAT;}
-"char" {yylval.tipo = 3;
-	return CAR;}
-
-"struct" {return ESTRUCT;}
-"inicio" {return INICIO;}
-"fin" {return FIN;}
-"define" {return DEF;}
-"if" {return SI;}
-"entonces" {return ENTC;}
-"else" {return SINO;}
-"while" {return MIENT;}
-"hacer" {return HACER;}
-"switch" {return SEGUN;}
-"case" {return CASO;}
-"leer" {return LEER;}
-"escribir" {return ESCRIBE;}
-"return" {return DEVOL;}
-"break" {return TERMI;}
-"default" {return PRED;}
+{id} {	
+ if(yyleng>32){
+ printf("Error lexico %s excede la longitud permitida\n",yytext);
+ return -1;
+ }
+ strcpy(yylval.id,yytext);
+ return ID;
+}
 
 ";" {return PYC;}
 "[" {return CORI;}
@@ -80,12 +90,9 @@ caract \'{simb}\'
 "%" {return PRC;}
 "." {return PT;}
 
-
 "||" {return OR;}
 "&&" {return AND;}
 "!" {return NOT;}
-"true" {return VERDAD;}
-"false" {return FALSO;}
 
 ">" {return MAY;}
 ">=" {return MAYI;}
