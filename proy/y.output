@@ -1,0 +1,1987 @@
+   0  $accept : prog $end
+
+   1  prog : declara func
+
+   2  declara : tipo list_var PYC declara
+   3          | tipo_reg list_var PYC declara
+   4          |
+
+   5  tipo_reg : ESTRUCT INICIO declara FIN
+
+   6  tipo : base tipo_arr
+
+   7  base : INT
+   8       | FLOAT
+   9       | CAR
+  10       | SIN
+
+  11  tipo_arr : CORI NUM CORD tipo_arr
+  12           |
+
+  13  list_var : list_var COMA ID
+  14           | ID
+
+  15  func : DEF tipo ID PARI argum PARD INICIO declara sentenc FIN func
+  16       |
+
+  17  argum : list_arg
+  18        | SIN
+
+  19  list_arg : list_arg COMA arg
+  20           | arg
+
+  21  arg : tipo_arg ID
+
+  22  tipo_arg : base param_arr
+
+  23  param_arr : CORI CORD param_arr
+  24            |
+
+  25  sentenc : SI e_bool ENTC sentenc FIN
+  26          | SI e_bool ENTC sentenc SINO sentenc FIN
+  27          | MIENT e_bool HACER sentenc FIN
+  28          | HACER sentenc MIENT e_bool PYC
+  29          | SEGUN PARI var PARD HACER casos predet FIN
+  30          | var DPI expr PYC
+  31          | ESCRIBE expr PYC
+  32          | LEER var PYC
+  33          | DEVOL PYC
+  34          | DEVOL expr PYC
+  35          | TERMI PYC
+  36          | INICIO sentenc FIN
+
+  37  casos : CASO NUM DP sentenc casos
+  38        | CASO NUM DP sentenc
+
+  39  predet : PRED DP sentenc
+  40         |
+
+  41  e_bool : e_bool OR e_bool
+  42         | e_bool AND e_bool
+  43         | NOT e_bool
+  44         | PARI e_bool PARD
+  45         | relac
+  46         | VERDAD
+  47         | FALSO
+
+  48  relac : relac op_rel relac
+  49        | expr
+
+  50  op_rel : MAY
+  51         | MEN
+  52         | MAYI
+  53         | MENI
+  54         | DIF
+  55         | IGUAL
+
+  56  expr : expr op_arit expr
+  57       | expr PRC expr
+  58       | PARI expr PARD
+  59       | ID
+  60       | var
+  61       | NUM
+  62       | CAD
+  63       | CARACT
+  64       | ID PARI param PARD
+
+  65  op_arit : MAS
+  66          | MNS
+  67          | MUL
+  68          | DIV
+
+  69  var : dato_est_sim
+  70      | arreglo
+
+  71  dato_est_sim : dato_est_sim PT ID
+  72               | ID
+
+  73  arreglo : ID CORI expr CORD
+  74          | arreglo CORI expr CORD
+
+  75  param : list_param
+  76        |
+
+  77  list_param : list_param COMA expr
+  78             | expr
+
+state 0
+	$accept : . prog $end  (0)
+	declara : .  (4)
+
+	ESTRUCT  shift 1
+	INT  shift 2
+	FLOAT  shift 3
+	CAR  shift 4
+	SIN  shift 5
+	$end  reduce 4
+	DEF  reduce 4
+
+	prog  goto 6
+	declara  goto 7
+	tipo  goto 8
+	tipo_reg  goto 9
+	base  goto 10
+
+
+state 1
+	tipo_reg : ESTRUCT . INICIO declara FIN  (5)
+
+	INICIO  shift 11
+	.  error
+
+
+state 2
+	base : INT .  (7)
+
+	.  reduce 7
+
+
+state 3
+	base : FLOAT .  (8)
+
+	.  reduce 8
+
+
+state 4
+	base : CAR .  (9)
+
+	.  reduce 9
+
+
+state 5
+	base : SIN .  (10)
+
+	.  reduce 10
+
+
+state 6
+	$accept : prog . $end  (0)
+
+	$end  accept
+
+
+state 7
+	prog : declara . func  (1)
+	func : .  (16)
+
+	DEF  shift 12
+	$end  reduce 16
+
+	func  goto 13
+
+
+state 8
+	declara : tipo . list_var PYC declara  (2)
+
+	ID  shift 14
+	.  error
+
+	list_var  goto 15
+
+
+state 9
+	declara : tipo_reg . list_var PYC declara  (3)
+
+	ID  shift 14
+	.  error
+
+	list_var  goto 16
+
+
+state 10
+	tipo : base . tipo_arr  (6)
+	tipo_arr : .  (12)
+
+	CORI  shift 17
+	ID  reduce 12
+
+	tipo_arr  goto 18
+
+
+state 11
+	tipo_reg : ESTRUCT INICIO . declara FIN  (5)
+	declara : .  (4)
+
+	ESTRUCT  shift 1
+	INT  shift 2
+	FLOAT  shift 3
+	CAR  shift 4
+	SIN  shift 5
+	FIN  reduce 4
+
+	declara  goto 19
+	tipo  goto 8
+	tipo_reg  goto 9
+	base  goto 10
+
+
+state 12
+	func : DEF . tipo ID PARI argum PARD INICIO declara sentenc FIN func  (15)
+
+	INT  shift 2
+	FLOAT  shift 3
+	CAR  shift 4
+	SIN  shift 5
+	.  error
+
+	tipo  goto 20
+	base  goto 10
+
+
+state 13
+	prog : declara func .  (1)
+
+	.  reduce 1
+
+
+state 14
+	list_var : ID .  (14)
+
+	.  reduce 14
+
+
+state 15
+	declara : tipo list_var . PYC declara  (2)
+	list_var : list_var . COMA ID  (13)
+
+	PYC  shift 21
+	COMA  shift 22
+	.  error
+
+
+state 16
+	declara : tipo_reg list_var . PYC declara  (3)
+	list_var : list_var . COMA ID  (13)
+
+	PYC  shift 23
+	COMA  shift 22
+	.  error
+
+
+state 17
+	tipo_arr : CORI . NUM CORD tipo_arr  (11)
+
+	NUM  shift 24
+	.  error
+
+
+state 18
+	tipo : base tipo_arr .  (6)
+
+	.  reduce 6
+
+
+state 19
+	tipo_reg : ESTRUCT INICIO declara . FIN  (5)
+
+	FIN  shift 25
+	.  error
+
+
+state 20
+	func : DEF tipo . ID PARI argum PARD INICIO declara sentenc FIN func  (15)
+
+	ID  shift 26
+	.  error
+
+
+state 21
+	declara : tipo list_var PYC . declara  (2)
+	declara : .  (4)
+
+	ESTRUCT  shift 1
+	INT  shift 2
+	FLOAT  shift 3
+	CAR  shift 4
+	SIN  shift 5
+	$end  reduce 4
+	INICIO  reduce 4
+	FIN  reduce 4
+	DEF  reduce 4
+	SI  reduce 4
+	MIENT  reduce 4
+	HACER  reduce 4
+	SEGUN  reduce 4
+	ESCRIBE  reduce 4
+	LEER  reduce 4
+	DEVOL  reduce 4
+	TERMI  reduce 4
+	ID  reduce 4
+
+	declara  goto 27
+	tipo  goto 8
+	tipo_reg  goto 9
+	base  goto 10
+
+
+state 22
+	list_var : list_var COMA . ID  (13)
+
+	ID  shift 28
+	.  error
+
+
+state 23
+	declara : tipo_reg list_var PYC . declara  (3)
+	declara : .  (4)
+
+	ESTRUCT  shift 1
+	INT  shift 2
+	FLOAT  shift 3
+	CAR  shift 4
+	SIN  shift 5
+	$end  reduce 4
+	INICIO  reduce 4
+	FIN  reduce 4
+	DEF  reduce 4
+	SI  reduce 4
+	MIENT  reduce 4
+	HACER  reduce 4
+	SEGUN  reduce 4
+	ESCRIBE  reduce 4
+	LEER  reduce 4
+	DEVOL  reduce 4
+	TERMI  reduce 4
+	ID  reduce 4
+
+	declara  goto 29
+	tipo  goto 8
+	tipo_reg  goto 9
+	base  goto 10
+
+
+state 24
+	tipo_arr : CORI NUM . CORD tipo_arr  (11)
+
+	CORD  shift 30
+	.  error
+
+
+state 25
+	tipo_reg : ESTRUCT INICIO declara FIN .  (5)
+
+	.  reduce 5
+
+
+state 26
+	func : DEF tipo ID . PARI argum PARD INICIO declara sentenc FIN func  (15)
+
+	PARI  shift 31
+	.  error
+
+
+state 27
+	declara : tipo list_var PYC declara .  (2)
+
+	.  reduce 2
+
+
+state 28
+	list_var : list_var COMA ID .  (13)
+
+	.  reduce 13
+
+
+state 29
+	declara : tipo_reg list_var PYC declara .  (3)
+
+	.  reduce 3
+
+
+state 30
+	tipo_arr : CORI NUM CORD . tipo_arr  (11)
+	tipo_arr : .  (12)
+
+	CORI  shift 17
+	ID  reduce 12
+
+	tipo_arr  goto 32
+
+
+state 31
+	func : DEF tipo ID PARI . argum PARD INICIO declara sentenc FIN func  (15)
+
+	INT  shift 2
+	FLOAT  shift 3
+	CAR  shift 4
+	SIN  shift 33
+	.  error
+
+	base  goto 34
+	argum  goto 35
+	list_arg  goto 36
+	arg  goto 37
+	tipo_arg  goto 38
+
+
+state 32
+	tipo_arr : CORI NUM CORD tipo_arr .  (11)
+
+	.  reduce 11
+
+
+state 33
+	base : SIN .  (10)
+	argum : SIN .  (18)
+
+	PARD  reduce 18
+	CORI  reduce 10
+	ID  reduce 10
+
+
+state 34
+	tipo_arg : base . param_arr  (22)
+	param_arr : .  (24)
+
+	CORI  shift 39
+	ID  reduce 24
+
+	param_arr  goto 40
+
+
+state 35
+	func : DEF tipo ID PARI argum . PARD INICIO declara sentenc FIN func  (15)
+
+	PARD  shift 41
+	.  error
+
+
+state 36
+	argum : list_arg .  (17)
+	list_arg : list_arg . COMA arg  (19)
+
+	COMA  shift 42
+	PARD  reduce 17
+
+
+state 37
+	list_arg : arg .  (20)
+
+	.  reduce 20
+
+
+state 38
+	arg : tipo_arg . ID  (21)
+
+	ID  shift 43
+	.  error
+
+
+state 39
+	param_arr : CORI . CORD param_arr  (23)
+
+	CORD  shift 44
+	.  error
+
+
+state 40
+	tipo_arg : base param_arr .  (22)
+
+	.  reduce 22
+
+
+state 41
+	func : DEF tipo ID PARI argum PARD . INICIO declara sentenc FIN func  (15)
+
+	INICIO  shift 45
+	.  error
+
+
+state 42
+	list_arg : list_arg COMA . arg  (19)
+
+	INT  shift 2
+	FLOAT  shift 3
+	CAR  shift 4
+	SIN  shift 5
+	.  error
+
+	base  goto 34
+	arg  goto 46
+	tipo_arg  goto 38
+
+
+state 43
+	arg : tipo_arg ID .  (21)
+
+	.  reduce 21
+
+
+state 44
+	param_arr : CORI CORD . param_arr  (23)
+	param_arr : .  (24)
+
+	CORI  shift 39
+	ID  reduce 24
+
+	param_arr  goto 47
+
+
+state 45
+	func : DEF tipo ID PARI argum PARD INICIO . declara sentenc FIN func  (15)
+	declara : .  (4)
+
+	ESTRUCT  shift 1
+	INT  shift 2
+	FLOAT  shift 3
+	CAR  shift 4
+	SIN  shift 5
+	INICIO  reduce 4
+	SI  reduce 4
+	MIENT  reduce 4
+	HACER  reduce 4
+	SEGUN  reduce 4
+	ESCRIBE  reduce 4
+	LEER  reduce 4
+	DEVOL  reduce 4
+	TERMI  reduce 4
+	ID  reduce 4
+
+	declara  goto 48
+	tipo  goto 8
+	tipo_reg  goto 9
+	base  goto 10
+
+
+state 46
+	list_arg : list_arg COMA arg .  (19)
+
+	.  reduce 19
+
+
+state 47
+	param_arr : CORI CORD param_arr .  (23)
+
+	.  reduce 23
+
+
+state 48
+	func : DEF tipo ID PARI argum PARD INICIO declara . sentenc FIN func  (15)
+
+	INICIO  shift 49
+	SI  shift 50
+	MIENT  shift 51
+	HACER  shift 52
+	SEGUN  shift 53
+	ESCRIBE  shift 54
+	LEER  shift 55
+	DEVOL  shift 56
+	TERMI  shift 57
+	ID  shift 58
+	.  error
+
+	sentenc  goto 59
+	var  goto 60
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 49
+	sentenc : INICIO . sentenc FIN  (36)
+
+	INICIO  shift 49
+	SI  shift 50
+	MIENT  shift 51
+	HACER  shift 52
+	SEGUN  shift 53
+	ESCRIBE  shift 54
+	LEER  shift 55
+	DEVOL  shift 56
+	TERMI  shift 57
+	ID  shift 58
+	.  error
+
+	sentenc  goto 63
+	var  goto 60
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 50
+	sentenc : SI . e_bool ENTC sentenc FIN  (25)
+	sentenc : SI . e_bool ENTC sentenc SINO sentenc FIN  (26)
+
+	PARI  shift 64
+	NOT  shift 65
+	VERDAD  shift 66
+	FALSO  shift 67
+	ID  shift 68
+	NUM  shift 69
+	CARACT  shift 70
+	CAD  shift 71
+	.  error
+
+	e_bool  goto 72
+	var  goto 73
+	expr  goto 74
+	relac  goto 75
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 51
+	sentenc : MIENT . e_bool HACER sentenc FIN  (27)
+
+	PARI  shift 64
+	NOT  shift 65
+	VERDAD  shift 66
+	FALSO  shift 67
+	ID  shift 68
+	NUM  shift 69
+	CARACT  shift 70
+	CAD  shift 71
+	.  error
+
+	e_bool  goto 76
+	var  goto 73
+	expr  goto 74
+	relac  goto 75
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 52
+	sentenc : HACER . sentenc MIENT e_bool PYC  (28)
+
+	INICIO  shift 49
+	SI  shift 50
+	MIENT  shift 51
+	HACER  shift 52
+	SEGUN  shift 53
+	ESCRIBE  shift 54
+	LEER  shift 55
+	DEVOL  shift 56
+	TERMI  shift 57
+	ID  shift 58
+	.  error
+
+	sentenc  goto 77
+	var  goto 60
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 53
+	sentenc : SEGUN . PARI var PARD HACER casos predet FIN  (29)
+
+	PARI  shift 78
+	.  error
+
+
+state 54
+	sentenc : ESCRIBE . expr PYC  (31)
+
+	PARI  shift 79
+	ID  shift 68
+	NUM  shift 69
+	CARACT  shift 70
+	CAD  shift 71
+	.  error
+
+	var  goto 73
+	expr  goto 80
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 55
+	sentenc : LEER . var PYC  (32)
+
+	ID  shift 58
+	.  error
+
+	var  goto 81
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 56
+	sentenc : DEVOL . PYC  (33)
+	sentenc : DEVOL . expr PYC  (34)
+
+	PYC  shift 82
+	PARI  shift 79
+	ID  shift 68
+	NUM  shift 69
+	CARACT  shift 70
+	CAD  shift 71
+	.  error
+
+	var  goto 73
+	expr  goto 83
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 57
+	sentenc : TERMI . PYC  (35)
+
+	PYC  shift 84
+	.  error
+
+
+state 58
+	dato_est_sim : ID .  (72)
+	arreglo : ID . CORI expr CORD  (73)
+
+	CORI  shift 85
+	PYC  reduce 72
+	PARD  reduce 72
+	DPI  reduce 72
+	PT  reduce 72
+
+
+state 59
+	func : DEF tipo ID PARI argum PARD INICIO declara sentenc . FIN func  (15)
+
+	FIN  shift 86
+	.  error
+
+
+state 60
+	sentenc : var . DPI expr PYC  (30)
+
+	DPI  shift 87
+	.  error
+
+
+state 61
+	var : dato_est_sim .  (69)
+	dato_est_sim : dato_est_sim . PT ID  (71)
+
+	PT  shift 88
+	PYC  reduce 69
+	PARD  reduce 69
+	CORD  reduce 69
+	COMA  reduce 69
+	DPI  reduce 69
+	PRC  reduce 69
+	ENTC  reduce 69
+	HACER  reduce 69
+	OR  reduce 69
+	AND  reduce 69
+	MAY  reduce 69
+	MAYI  reduce 69
+	MEN  reduce 69
+	MENI  reduce 69
+	DIF  reduce 69
+	IGUAL  reduce 69
+	MAS  reduce 69
+	MNS  reduce 69
+	MUL  reduce 69
+	DIV  reduce 69
+
+
+state 62
+	var : arreglo .  (70)
+	arreglo : arreglo . CORI expr CORD  (74)
+
+	CORI  shift 89
+	PYC  reduce 70
+	PARD  reduce 70
+	CORD  reduce 70
+	COMA  reduce 70
+	DPI  reduce 70
+	PRC  reduce 70
+	ENTC  reduce 70
+	HACER  reduce 70
+	OR  reduce 70
+	AND  reduce 70
+	MAY  reduce 70
+	MAYI  reduce 70
+	MEN  reduce 70
+	MENI  reduce 70
+	DIF  reduce 70
+	IGUAL  reduce 70
+	MAS  reduce 70
+	MNS  reduce 70
+	MUL  reduce 70
+	DIV  reduce 70
+
+
+state 63
+	sentenc : INICIO sentenc . FIN  (36)
+
+	FIN  shift 90
+	.  error
+
+
+state 64
+	e_bool : PARI . e_bool PARD  (44)
+	expr : PARI . expr PARD  (58)
+
+	PARI  shift 64
+	NOT  shift 65
+	VERDAD  shift 66
+	FALSO  shift 67
+	ID  shift 68
+	NUM  shift 69
+	CARACT  shift 70
+	CAD  shift 71
+	.  error
+
+	e_bool  goto 91
+	var  goto 73
+	expr  goto 92
+	relac  goto 75
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 65
+	e_bool : NOT . e_bool  (43)
+
+	PARI  shift 64
+	NOT  shift 65
+	VERDAD  shift 66
+	FALSO  shift 67
+	ID  shift 68
+	NUM  shift 69
+	CARACT  shift 70
+	CAD  shift 71
+	.  error
+
+	e_bool  goto 93
+	var  goto 73
+	expr  goto 74
+	relac  goto 75
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 66
+	e_bool : VERDAD .  (46)
+
+	.  reduce 46
+
+
+state 67
+	e_bool : FALSO .  (47)
+
+	.  reduce 47
+
+
+68: reduce/reduce conflict (reduce 59, reduce 72) on PYC
+68: reduce/reduce conflict (reduce 59, reduce 72) on PARD
+68: reduce/reduce conflict (reduce 59, reduce 72) on CORD
+68: reduce/reduce conflict (reduce 59, reduce 72) on COMA
+68: reduce/reduce conflict (reduce 59, reduce 72) on PRC
+68: reduce/reduce conflict (reduce 59, reduce 72) on ENTC
+68: reduce/reduce conflict (reduce 59, reduce 72) on HACER
+68: reduce/reduce conflict (reduce 59, reduce 72) on OR
+68: reduce/reduce conflict (reduce 59, reduce 72) on AND
+68: reduce/reduce conflict (reduce 59, reduce 72) on MAY
+68: reduce/reduce conflict (reduce 59, reduce 72) on MAYI
+68: reduce/reduce conflict (reduce 59, reduce 72) on MEN
+68: reduce/reduce conflict (reduce 59, reduce 72) on MENI
+68: reduce/reduce conflict (reduce 59, reduce 72) on DIF
+68: reduce/reduce conflict (reduce 59, reduce 72) on IGUAL
+68: reduce/reduce conflict (reduce 59, reduce 72) on MAS
+68: reduce/reduce conflict (reduce 59, reduce 72) on MNS
+68: reduce/reduce conflict (reduce 59, reduce 72) on MUL
+68: reduce/reduce conflict (reduce 59, reduce 72) on DIV
+state 68
+	expr : ID .  (59)
+	expr : ID . PARI param PARD  (64)
+	dato_est_sim : ID .  (72)
+	arreglo : ID . CORI expr CORD  (73)
+
+	PARI  shift 94
+	CORI  shift 85
+	PYC  reduce 59
+	PARD  reduce 59
+	CORD  reduce 59
+	COMA  reduce 59
+	PRC  reduce 59
+	PT  reduce 72
+	ENTC  reduce 59
+	HACER  reduce 59
+	OR  reduce 59
+	AND  reduce 59
+	MAY  reduce 59
+	MAYI  reduce 59
+	MEN  reduce 59
+	MENI  reduce 59
+	DIF  reduce 59
+	IGUAL  reduce 59
+	MAS  reduce 59
+	MNS  reduce 59
+	MUL  reduce 59
+	DIV  reduce 59
+
+
+state 69
+	expr : NUM .  (61)
+
+	.  reduce 61
+
+
+state 70
+	expr : CARACT .  (63)
+
+	.  reduce 63
+
+
+state 71
+	expr : CAD .  (62)
+
+	.  reduce 62
+
+
+state 72
+	sentenc : SI e_bool . ENTC sentenc FIN  (25)
+	sentenc : SI e_bool . ENTC sentenc SINO sentenc FIN  (26)
+	e_bool : e_bool . OR e_bool  (41)
+	e_bool : e_bool . AND e_bool  (42)
+
+	ENTC  shift 95
+	OR  shift 96
+	AND  shift 97
+	.  error
+
+
+state 73
+	expr : var .  (60)
+
+	.  reduce 60
+
+
+state 74
+	relac : expr .  (49)
+	expr : expr . op_arit expr  (56)
+	expr : expr . PRC expr  (57)
+
+	PRC  shift 98
+	MAS  shift 99
+	MNS  shift 100
+	MUL  shift 101
+	DIV  shift 102
+	PYC  reduce 49
+	PARD  reduce 49
+	ENTC  reduce 49
+	HACER  reduce 49
+	OR  reduce 49
+	AND  reduce 49
+	MAY  reduce 49
+	MAYI  reduce 49
+	MEN  reduce 49
+	MENI  reduce 49
+	DIF  reduce 49
+	IGUAL  reduce 49
+
+	op_arit  goto 103
+
+
+state 75
+	e_bool : relac .  (45)
+	relac : relac . op_rel relac  (48)
+
+	MAY  shift 104
+	MAYI  shift 105
+	MEN  shift 106
+	MENI  shift 107
+	DIF  shift 108
+	IGUAL  shift 109
+	PYC  reduce 45
+	PARD  reduce 45
+	ENTC  reduce 45
+	HACER  reduce 45
+	OR  reduce 45
+	AND  reduce 45
+
+	op_rel  goto 110
+
+
+state 76
+	sentenc : MIENT e_bool . HACER sentenc FIN  (27)
+	e_bool : e_bool . OR e_bool  (41)
+	e_bool : e_bool . AND e_bool  (42)
+
+	HACER  shift 111
+	OR  shift 96
+	AND  shift 97
+	.  error
+
+
+state 77
+	sentenc : HACER sentenc . MIENT e_bool PYC  (28)
+
+	MIENT  shift 112
+	.  error
+
+
+state 78
+	sentenc : SEGUN PARI . var PARD HACER casos predet FIN  (29)
+
+	ID  shift 58
+	.  error
+
+	var  goto 113
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 79
+	expr : PARI . expr PARD  (58)
+
+	PARI  shift 79
+	ID  shift 68
+	NUM  shift 69
+	CARACT  shift 70
+	CAD  shift 71
+	.  error
+
+	var  goto 73
+	expr  goto 114
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 80
+	sentenc : ESCRIBE expr . PYC  (31)
+	expr : expr . op_arit expr  (56)
+	expr : expr . PRC expr  (57)
+
+	PYC  shift 115
+	PRC  shift 98
+	MAS  shift 99
+	MNS  shift 100
+	MUL  shift 101
+	DIV  shift 102
+	.  error
+
+	op_arit  goto 103
+
+
+state 81
+	sentenc : LEER var . PYC  (32)
+
+	PYC  shift 116
+	.  error
+
+
+state 82
+	sentenc : DEVOL PYC .  (33)
+
+	.  reduce 33
+
+
+state 83
+	sentenc : DEVOL expr . PYC  (34)
+	expr : expr . op_arit expr  (56)
+	expr : expr . PRC expr  (57)
+
+	PYC  shift 117
+	PRC  shift 98
+	MAS  shift 99
+	MNS  shift 100
+	MUL  shift 101
+	DIV  shift 102
+	.  error
+
+	op_arit  goto 103
+
+
+state 84
+	sentenc : TERMI PYC .  (35)
+
+	.  reduce 35
+
+
+state 85
+	arreglo : ID CORI . expr CORD  (73)
+
+	PARI  shift 79
+	ID  shift 68
+	NUM  shift 69
+	CARACT  shift 70
+	CAD  shift 71
+	.  error
+
+	var  goto 73
+	expr  goto 118
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 86
+	func : DEF tipo ID PARI argum PARD INICIO declara sentenc FIN . func  (15)
+	func : .  (16)
+
+	DEF  shift 12
+	$end  reduce 16
+
+	func  goto 119
+
+
+state 87
+	sentenc : var DPI . expr PYC  (30)
+
+	PARI  shift 79
+	ID  shift 68
+	NUM  shift 69
+	CARACT  shift 70
+	CAD  shift 71
+	.  error
+
+	var  goto 73
+	expr  goto 120
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 88
+	dato_est_sim : dato_est_sim PT . ID  (71)
+
+	ID  shift 121
+	.  error
+
+
+state 89
+	arreglo : arreglo CORI . expr CORD  (74)
+
+	PARI  shift 79
+	ID  shift 68
+	NUM  shift 69
+	CARACT  shift 70
+	CAD  shift 71
+	.  error
+
+	var  goto 73
+	expr  goto 122
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 90
+	sentenc : INICIO sentenc FIN .  (36)
+
+	.  reduce 36
+
+
+state 91
+	e_bool : e_bool . OR e_bool  (41)
+	e_bool : e_bool . AND e_bool  (42)
+	e_bool : PARI e_bool . PARD  (44)
+
+	PARD  shift 123
+	OR  shift 96
+	AND  shift 97
+	.  error
+
+
+92: shift/reduce conflict (shift 124, reduce 49) on PARD
+state 92
+	relac : expr .  (49)
+	expr : expr . op_arit expr  (56)
+	expr : expr . PRC expr  (57)
+	expr : PARI expr . PARD  (58)
+
+	PARD  shift 124
+	PRC  shift 98
+	MAS  shift 99
+	MNS  shift 100
+	MUL  shift 101
+	DIV  shift 102
+	OR  reduce 49
+	AND  reduce 49
+	MAY  reduce 49
+	MAYI  reduce 49
+	MEN  reduce 49
+	MENI  reduce 49
+	DIF  reduce 49
+	IGUAL  reduce 49
+
+	op_arit  goto 103
+
+
+93: shift/reduce conflict (shift 96, reduce 43) on OR
+93: shift/reduce conflict (shift 97, reduce 43) on AND
+state 93
+	e_bool : e_bool . OR e_bool  (41)
+	e_bool : e_bool . AND e_bool  (42)
+	e_bool : NOT e_bool .  (43)
+
+	OR  shift 96
+	AND  shift 97
+	PYC  reduce 43
+	PARD  reduce 43
+	ENTC  reduce 43
+	HACER  reduce 43
+
+
+state 94
+	expr : ID PARI . param PARD  (64)
+	param : .  (76)
+
+	PARI  shift 79
+	ID  shift 68
+	NUM  shift 69
+	CARACT  shift 70
+	CAD  shift 71
+	PARD  reduce 76
+
+	var  goto 73
+	expr  goto 125
+	param  goto 126
+	dato_est_sim  goto 61
+	arreglo  goto 62
+	list_param  goto 127
+
+
+state 95
+	sentenc : SI e_bool ENTC . sentenc FIN  (25)
+	sentenc : SI e_bool ENTC . sentenc SINO sentenc FIN  (26)
+
+	INICIO  shift 49
+	SI  shift 50
+	MIENT  shift 51
+	HACER  shift 52
+	SEGUN  shift 53
+	ESCRIBE  shift 54
+	LEER  shift 55
+	DEVOL  shift 56
+	TERMI  shift 57
+	ID  shift 58
+	.  error
+
+	sentenc  goto 128
+	var  goto 60
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 96
+	e_bool : e_bool OR . e_bool  (41)
+
+	PARI  shift 64
+	NOT  shift 65
+	VERDAD  shift 66
+	FALSO  shift 67
+	ID  shift 68
+	NUM  shift 69
+	CARACT  shift 70
+	CAD  shift 71
+	.  error
+
+	e_bool  goto 129
+	var  goto 73
+	expr  goto 74
+	relac  goto 75
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 97
+	e_bool : e_bool AND . e_bool  (42)
+
+	PARI  shift 64
+	NOT  shift 65
+	VERDAD  shift 66
+	FALSO  shift 67
+	ID  shift 68
+	NUM  shift 69
+	CARACT  shift 70
+	CAD  shift 71
+	.  error
+
+	e_bool  goto 130
+	var  goto 73
+	expr  goto 74
+	relac  goto 75
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 98
+	expr : expr PRC . expr  (57)
+
+	PARI  shift 79
+	ID  shift 68
+	NUM  shift 69
+	CARACT  shift 70
+	CAD  shift 71
+	.  error
+
+	var  goto 73
+	expr  goto 131
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 99
+	op_arit : MAS .  (65)
+
+	.  reduce 65
+
+
+state 100
+	op_arit : MNS .  (66)
+
+	.  reduce 66
+
+
+state 101
+	op_arit : MUL .  (67)
+
+	.  reduce 67
+
+
+state 102
+	op_arit : DIV .  (68)
+
+	.  reduce 68
+
+
+state 103
+	expr : expr op_arit . expr  (56)
+
+	PARI  shift 79
+	ID  shift 68
+	NUM  shift 69
+	CARACT  shift 70
+	CAD  shift 71
+	.  error
+
+	var  goto 73
+	expr  goto 132
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 104
+	op_rel : MAY .  (50)
+
+	.  reduce 50
+
+
+state 105
+	op_rel : MAYI .  (52)
+
+	.  reduce 52
+
+
+state 106
+	op_rel : MEN .  (51)
+
+	.  reduce 51
+
+
+state 107
+	op_rel : MENI .  (53)
+
+	.  reduce 53
+
+
+state 108
+	op_rel : DIF .  (54)
+
+	.  reduce 54
+
+
+state 109
+	op_rel : IGUAL .  (55)
+
+	.  reduce 55
+
+
+state 110
+	relac : relac op_rel . relac  (48)
+
+	PARI  shift 79
+	ID  shift 68
+	NUM  shift 69
+	CARACT  shift 70
+	CAD  shift 71
+	.  error
+
+	var  goto 73
+	expr  goto 74
+	relac  goto 133
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 111
+	sentenc : MIENT e_bool HACER . sentenc FIN  (27)
+
+	INICIO  shift 49
+	SI  shift 50
+	MIENT  shift 51
+	HACER  shift 52
+	SEGUN  shift 53
+	ESCRIBE  shift 54
+	LEER  shift 55
+	DEVOL  shift 56
+	TERMI  shift 57
+	ID  shift 58
+	.  error
+
+	sentenc  goto 134
+	var  goto 60
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 112
+	sentenc : HACER sentenc MIENT . e_bool PYC  (28)
+
+	PARI  shift 64
+	NOT  shift 65
+	VERDAD  shift 66
+	FALSO  shift 67
+	ID  shift 68
+	NUM  shift 69
+	CARACT  shift 70
+	CAD  shift 71
+	.  error
+
+	e_bool  goto 135
+	var  goto 73
+	expr  goto 74
+	relac  goto 75
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 113
+	sentenc : SEGUN PARI var . PARD HACER casos predet FIN  (29)
+
+	PARD  shift 136
+	.  error
+
+
+state 114
+	expr : expr . op_arit expr  (56)
+	expr : expr . PRC expr  (57)
+	expr : PARI expr . PARD  (58)
+
+	PARD  shift 124
+	PRC  shift 98
+	MAS  shift 99
+	MNS  shift 100
+	MUL  shift 101
+	DIV  shift 102
+	.  error
+
+	op_arit  goto 103
+
+
+state 115
+	sentenc : ESCRIBE expr PYC .  (31)
+
+	.  reduce 31
+
+
+state 116
+	sentenc : LEER var PYC .  (32)
+
+	.  reduce 32
+
+
+state 117
+	sentenc : DEVOL expr PYC .  (34)
+
+	.  reduce 34
+
+
+state 118
+	expr : expr . op_arit expr  (56)
+	expr : expr . PRC expr  (57)
+	arreglo : ID CORI expr . CORD  (73)
+
+	CORD  shift 137
+	PRC  shift 98
+	MAS  shift 99
+	MNS  shift 100
+	MUL  shift 101
+	DIV  shift 102
+	.  error
+
+	op_arit  goto 103
+
+
+state 119
+	func : DEF tipo ID PARI argum PARD INICIO declara sentenc FIN func .  (15)
+
+	.  reduce 15
+
+
+state 120
+	sentenc : var DPI expr . PYC  (30)
+	expr : expr . op_arit expr  (56)
+	expr : expr . PRC expr  (57)
+
+	PYC  shift 138
+	PRC  shift 98
+	MAS  shift 99
+	MNS  shift 100
+	MUL  shift 101
+	DIV  shift 102
+	.  error
+
+	op_arit  goto 103
+
+
+state 121
+	dato_est_sim : dato_est_sim PT ID .  (71)
+
+	.  reduce 71
+
+
+state 122
+	expr : expr . op_arit expr  (56)
+	expr : expr . PRC expr  (57)
+	arreglo : arreglo CORI expr . CORD  (74)
+
+	CORD  shift 139
+	PRC  shift 98
+	MAS  shift 99
+	MNS  shift 100
+	MUL  shift 101
+	DIV  shift 102
+	.  error
+
+	op_arit  goto 103
+
+
+state 123
+	e_bool : PARI e_bool PARD .  (44)
+
+	.  reduce 44
+
+
+state 124
+	expr : PARI expr PARD .  (58)
+
+	.  reduce 58
+
+
+state 125
+	expr : expr . op_arit expr  (56)
+	expr : expr . PRC expr  (57)
+	list_param : expr .  (78)
+
+	PRC  shift 98
+	MAS  shift 99
+	MNS  shift 100
+	MUL  shift 101
+	DIV  shift 102
+	PARD  reduce 78
+	COMA  reduce 78
+
+	op_arit  goto 103
+
+
+state 126
+	expr : ID PARI param . PARD  (64)
+
+	PARD  shift 140
+	.  error
+
+
+state 127
+	param : list_param .  (75)
+	list_param : list_param . COMA expr  (77)
+
+	COMA  shift 141
+	PARD  reduce 75
+
+
+state 128
+	sentenc : SI e_bool ENTC sentenc . FIN  (25)
+	sentenc : SI e_bool ENTC sentenc . SINO sentenc FIN  (26)
+
+	FIN  shift 142
+	SINO  shift 143
+	.  error
+
+
+129: shift/reduce conflict (shift 96, reduce 41) on OR
+129: shift/reduce conflict (shift 97, reduce 41) on AND
+state 129
+	e_bool : e_bool . OR e_bool  (41)
+	e_bool : e_bool OR e_bool .  (41)
+	e_bool : e_bool . AND e_bool  (42)
+
+	OR  shift 96
+	AND  shift 97
+	PYC  reduce 41
+	PARD  reduce 41
+	ENTC  reduce 41
+	HACER  reduce 41
+
+
+130: shift/reduce conflict (shift 96, reduce 42) on OR
+130: shift/reduce conflict (shift 97, reduce 42) on AND
+state 130
+	e_bool : e_bool . OR e_bool  (41)
+	e_bool : e_bool . AND e_bool  (42)
+	e_bool : e_bool AND e_bool .  (42)
+
+	OR  shift 96
+	AND  shift 97
+	PYC  reduce 42
+	PARD  reduce 42
+	ENTC  reduce 42
+	HACER  reduce 42
+
+
+131: shift/reduce conflict (shift 98, reduce 57) on PRC
+131: shift/reduce conflict (shift 99, reduce 57) on MAS
+131: shift/reduce conflict (shift 100, reduce 57) on MNS
+131: shift/reduce conflict (shift 101, reduce 57) on MUL
+131: shift/reduce conflict (shift 102, reduce 57) on DIV
+state 131
+	expr : expr . op_arit expr  (56)
+	expr : expr . PRC expr  (57)
+	expr : expr PRC expr .  (57)
+
+	PRC  shift 98
+	MAS  shift 99
+	MNS  shift 100
+	MUL  shift 101
+	DIV  shift 102
+	PYC  reduce 57
+	PARD  reduce 57
+	CORD  reduce 57
+	COMA  reduce 57
+	ENTC  reduce 57
+	HACER  reduce 57
+	OR  reduce 57
+	AND  reduce 57
+	MAY  reduce 57
+	MAYI  reduce 57
+	MEN  reduce 57
+	MENI  reduce 57
+	DIF  reduce 57
+	IGUAL  reduce 57
+
+	op_arit  goto 103
+
+
+132: shift/reduce conflict (shift 98, reduce 56) on PRC
+132: shift/reduce conflict (shift 99, reduce 56) on MAS
+132: shift/reduce conflict (shift 100, reduce 56) on MNS
+132: shift/reduce conflict (shift 101, reduce 56) on MUL
+132: shift/reduce conflict (shift 102, reduce 56) on DIV
+state 132
+	expr : expr . op_arit expr  (56)
+	expr : expr op_arit expr .  (56)
+	expr : expr . PRC expr  (57)
+
+	PRC  shift 98
+	MAS  shift 99
+	MNS  shift 100
+	MUL  shift 101
+	DIV  shift 102
+	PYC  reduce 56
+	PARD  reduce 56
+	CORD  reduce 56
+	COMA  reduce 56
+	ENTC  reduce 56
+	HACER  reduce 56
+	OR  reduce 56
+	AND  reduce 56
+	MAY  reduce 56
+	MAYI  reduce 56
+	MEN  reduce 56
+	MENI  reduce 56
+	DIF  reduce 56
+	IGUAL  reduce 56
+
+	op_arit  goto 103
+
+
+133: shift/reduce conflict (shift 104, reduce 48) on MAY
+133: shift/reduce conflict (shift 105, reduce 48) on MAYI
+133: shift/reduce conflict (shift 106, reduce 48) on MEN
+133: shift/reduce conflict (shift 107, reduce 48) on MENI
+133: shift/reduce conflict (shift 108, reduce 48) on DIF
+133: shift/reduce conflict (shift 109, reduce 48) on IGUAL
+state 133
+	relac : relac . op_rel relac  (48)
+	relac : relac op_rel relac .  (48)
+
+	MAY  shift 104
+	MAYI  shift 105
+	MEN  shift 106
+	MENI  shift 107
+	DIF  shift 108
+	IGUAL  shift 109
+	PYC  reduce 48
+	PARD  reduce 48
+	ENTC  reduce 48
+	HACER  reduce 48
+	OR  reduce 48
+	AND  reduce 48
+
+	op_rel  goto 110
+
+
+state 134
+	sentenc : MIENT e_bool HACER sentenc . FIN  (27)
+
+	FIN  shift 144
+	.  error
+
+
+state 135
+	sentenc : HACER sentenc MIENT e_bool . PYC  (28)
+	e_bool : e_bool . OR e_bool  (41)
+	e_bool : e_bool . AND e_bool  (42)
+
+	PYC  shift 145
+	OR  shift 96
+	AND  shift 97
+	.  error
+
+
+state 136
+	sentenc : SEGUN PARI var PARD . HACER casos predet FIN  (29)
+
+	HACER  shift 146
+	.  error
+
+
+state 137
+	arreglo : ID CORI expr CORD .  (73)
+
+	.  reduce 73
+
+
+state 138
+	sentenc : var DPI expr PYC .  (30)
+
+	.  reduce 30
+
+
+state 139
+	arreglo : arreglo CORI expr CORD .  (74)
+
+	.  reduce 74
+
+
+state 140
+	expr : ID PARI param PARD .  (64)
+
+	.  reduce 64
+
+
+state 141
+	list_param : list_param COMA . expr  (77)
+
+	PARI  shift 79
+	ID  shift 68
+	NUM  shift 69
+	CARACT  shift 70
+	CAD  shift 71
+	.  error
+
+	var  goto 73
+	expr  goto 147
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 142
+	sentenc : SI e_bool ENTC sentenc FIN .  (25)
+
+	.  reduce 25
+
+
+state 143
+	sentenc : SI e_bool ENTC sentenc SINO . sentenc FIN  (26)
+
+	INICIO  shift 49
+	SI  shift 50
+	MIENT  shift 51
+	HACER  shift 52
+	SEGUN  shift 53
+	ESCRIBE  shift 54
+	LEER  shift 55
+	DEVOL  shift 56
+	TERMI  shift 57
+	ID  shift 58
+	.  error
+
+	sentenc  goto 148
+	var  goto 60
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 144
+	sentenc : MIENT e_bool HACER sentenc FIN .  (27)
+
+	.  reduce 27
+
+
+state 145
+	sentenc : HACER sentenc MIENT e_bool PYC .  (28)
+
+	.  reduce 28
+
+
+state 146
+	sentenc : SEGUN PARI var PARD HACER . casos predet FIN  (29)
+
+	CASO  shift 149
+	.  error
+
+	casos  goto 150
+
+
+state 147
+	expr : expr . op_arit expr  (56)
+	expr : expr . PRC expr  (57)
+	list_param : list_param COMA expr .  (77)
+
+	PRC  shift 98
+	MAS  shift 99
+	MNS  shift 100
+	MUL  shift 101
+	DIV  shift 102
+	PARD  reduce 77
+	COMA  reduce 77
+
+	op_arit  goto 103
+
+
+state 148
+	sentenc : SI e_bool ENTC sentenc SINO sentenc . FIN  (26)
+
+	FIN  shift 151
+	.  error
+
+
+state 149
+	casos : CASO . NUM DP sentenc casos  (37)
+	casos : CASO . NUM DP sentenc  (38)
+
+	NUM  shift 152
+	.  error
+
+
+state 150
+	sentenc : SEGUN PARI var PARD HACER casos . predet FIN  (29)
+	predet : .  (40)
+
+	PRED  shift 153
+	FIN  reduce 40
+
+	predet  goto 154
+
+
+state 151
+	sentenc : SI e_bool ENTC sentenc SINO sentenc FIN .  (26)
+
+	.  reduce 26
+
+
+state 152
+	casos : CASO NUM . DP sentenc casos  (37)
+	casos : CASO NUM . DP sentenc  (38)
+
+	DP  shift 155
+	.  error
+
+
+state 153
+	predet : PRED . DP sentenc  (39)
+
+	DP  shift 156
+	.  error
+
+
+state 154
+	sentenc : SEGUN PARI var PARD HACER casos predet . FIN  (29)
+
+	FIN  shift 157
+	.  error
+
+
+state 155
+	casos : CASO NUM DP . sentenc casos  (37)
+	casos : CASO NUM DP . sentenc  (38)
+
+	INICIO  shift 49
+	SI  shift 50
+	MIENT  shift 51
+	HACER  shift 52
+	SEGUN  shift 53
+	ESCRIBE  shift 54
+	LEER  shift 55
+	DEVOL  shift 56
+	TERMI  shift 57
+	ID  shift 58
+	.  error
+
+	sentenc  goto 158
+	var  goto 60
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 156
+	predet : PRED DP . sentenc  (39)
+
+	INICIO  shift 49
+	SI  shift 50
+	MIENT  shift 51
+	HACER  shift 52
+	SEGUN  shift 53
+	ESCRIBE  shift 54
+	LEER  shift 55
+	DEVOL  shift 56
+	TERMI  shift 57
+	ID  shift 58
+	.  error
+
+	sentenc  goto 159
+	var  goto 60
+	dato_est_sim  goto 61
+	arreglo  goto 62
+
+
+state 157
+	sentenc : SEGUN PARI var PARD HACER casos predet FIN .  (29)
+
+	.  reduce 29
+
+
+state 158
+	casos : CASO NUM DP sentenc . casos  (37)
+	casos : CASO NUM DP sentenc .  (38)
+
+	CASO  shift 149
+	FIN  reduce 38
+	PRED  reduce 38
+
+	casos  goto 160
+
+
+state 159
+	predet : PRED DP sentenc .  (39)
+
+	.  reduce 39
+
+
+state 160
+	casos : CASO NUM DP sentenc casos .  (37)
+
+	.  reduce 37
+
+
+State 68 contains 19 reduce/reduce conflicts.
+State 92 contains 1 shift/reduce conflict.
+State 93 contains 2 shift/reduce conflicts.
+State 129 contains 2 shift/reduce conflicts.
+State 130 contains 2 shift/reduce conflicts.
+State 131 contains 5 shift/reduce conflicts.
+State 132 contains 5 shift/reduce conflicts.
+State 133 contains 6 shift/reduce conflicts.
+
+
+51 terminals, 27 nonterminals
+79 grammar rules, 161 states
