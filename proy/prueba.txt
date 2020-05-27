@@ -1,3 +1,21 @@
 ent a;
 real b;
-car x[2];
+car c;
+estructura inicio ent x; fin reg;
+def ent funcion (ent p) inicio
+	ent q, r;
+	p:= 10;
+	q:= 20;
+	r:= p + q;
+	devolver r;
+fin
+def sin main (sin) inicio
+	a:= 0;
+	mientras a<10 hacer
+	a:= a + 1;
+	fin
+	si a=10 entonces
+	escribir "No puede entrar aqui";
+	fin
+	terminar;
+fin

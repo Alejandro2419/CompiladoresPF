@@ -1,8 +1,9 @@
+/*Hernandez Garcia Alejandro 26/05 */
 %{
 #include <stdio.h>
 extern int yylex();
 void yyerror(char *s);
-int tipo;
+extern int linea;
 %}
 
 %union{
@@ -13,17 +14,17 @@ int tipo;
 	char cadena[100];
 }
 
-%token PYC COMA DPI DP PRC PT
+%token PYC COMA DPI DP PT
 %token ESTRUCT INICIO FIN DEF SI ENTC SINO MIENT HACER SEGUN ESCRIBE LEER DEVOL TERMI CASO PRED
 %token VERDAD FALSO
 
 %left MAS MNS OR
-%left MUL DIV AND
+%left MUL DIV PRC AND
 %left NOT
 %left MAY MAYI MEN MENI DIF IGUAL
 %left PARI PARD CORI CORD
 
-%token<tipo> INT FLOAT CAR SIN
+%token<tipo> INT FLOAT DOUBLE CAR SIN
 %token<id> ID
 %token<num> NUM
 %token<c> CARACT
@@ -38,12 +39,16 @@ declara: tipo list_var PYC declara
 	| ;
 tipo_reg: ESTRUCT INICIO declara FIN;
 tipo: base tipo_arr;
-base: INT | FLOAT | CAR | SIN;
+base: INT
+	| FLOAT
+	| DOUBLE
+	| CAR
+	| SIN;
 tipo_arr: CORI NUM CORD tipo_arr
 	| ;
 list_var: list_var COMA ID
-	| ID;
-func: DEF tipo ID PARI argum PARD INICIO declara sentenc FIN func
+	| ID
+func: DEF tipo ID PARI argum PARD INICIO declara sentencs FIN func
 	| ;
 argum: list_arg
 	| SIN;
@@ -53,6 +58,7 @@ arg: tipo_arg ID;
 tipo_arg: base param_arr;
 param_arr: CORI CORD param_arr
 	| ;
+sentencs: sentencs sentenc | sentenc;
 sentenc: SI e_bool ENTC sentenc FIN
 	| SI e_bool ENTC sentenc SINO sentenc FIN
 	| MIENT e_bool HACER sentenc FIN
@@ -72,25 +78,31 @@ predet: PRED DP sentenc
 e_bool: e_bool OR e_bool
 	| e_bool AND e_bool
 	| NOT e_bool
-	| PARI e_bool PARD
 	| relac
 	| VERDAD
 	| FALSO;
-relac: relac op_rel relac
+relac: relac MAY relac
+	| relac MEN relac
+	| relac MAYI relac
+	| relac MENI relac
+	| relac DIF relac
+	| relac IGUAL relac
 	| expr;
-op_rel: MAY | MEN | MAYI | MENI | DIF | IGUAL;
-expr: expr op_arit expr
+expr: PARI expr PARD
+	| expr MUL expr
+	| expr DIV expr
 	| expr PRC expr
-	| PARI expr PARD
-	| ID | var | NUM | CAD | CARACT
-	| ID PARI param PARD;
-op_arit: MAS | MNS | MUL | DIV;
-var: dato_est_sim
-	| arreglo;
+	| expr MAS expr
+	| expr MNS expr
+	| var | NUM | CAD | CARACT;
+var: ID var_comp;
+var_comp: dato_est_sim
+	| arreglo
+	| PARI param PARD;
 dato_est_sim: dato_est_sim PT ID
-	| ID;
-arreglo: ID CORI expr CORD
-	| arreglo CORI expr CORD;
+	| ;
+arreglo: arreglo CORI expr CORD
+	| CORI expr CORD;
 param: list_param
 	| ;
 list_param: list_param COMA expr
@@ -99,7 +111,7 @@ list_param: list_param COMA expr
 %%
 
 void yyerror(char *s){
-	printf("%s\n",s);
+	printf("Linea %d: %s\n",linea,s);
 }
 
 
