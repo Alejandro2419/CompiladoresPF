@@ -1,16 +1,14 @@
 # CompiladoresPF
 Proyecto final de la clase de Compiladores
 
-Alumno: Hernández García Alejandro Manuel
-
 Compilacion:
 
-byacc -d -v  parser.y
+bison parser.y
 
 flex lexer.l
 
-gcc y.tab.c lex.yy.c main.c -o compi -lfl
+gcc stack.c tabla_tipos.c tabla_simbolos.c parser.tab.c lex.yy.c main.c -o compilador -lfl
 
 Ejecucion
 
-./compi prueba.txt
+./compilador prueba.txt
